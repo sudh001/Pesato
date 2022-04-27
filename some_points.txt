@@ -1,0 +1,102 @@
+ --->>> NOTE: The model classes and functions described here aren't exactly the ones represented in the code <<<----
+
+
+Views:
+>> login/reg (for both resturant and customer)
+>> customer_home : balence, add money
+>> resturant_home : menu, edit menu
+>> choose_resturant
+>> place_order
+>> track_order
+>> Update-order
+>> Resturant_upadate extends Update-order
+>> Delivary_update extends Update-order
+
+
+
+Controllers:
+>> login_reg_cltr
+	> login(u_name, pwd, type) // Helps
+	> reg(u_name, pwd, type)
+	// Used by login-reg view
+
+>> customer_cltr
+	> get_balance()
+	> set_balance()
+	// Used by customer-home
+// resturant-home dosen't need a controller as it isn't creating any more views. It can't talk to resturant class directly
+
+>> order_controller
+	> order: Order
+	> order_builder: Order_builder
+	> get_resturants(): String[]
+	> set_resturant(String rest_u_name)
+	> get_menu(): Item_list
+	> add_item(String item_name)
+	> rem_item(String item_name)
+	> get_status(): String // returns the order items and order's current status
+	> update_status(int who, bool isPass) // check order's update_status(...)
+	// Used by choose-resturant, place-order, track-order, update-order
+
+
+Model:
+>> class User
+	> u_name
+	> u_pwd
+	> ctor
+	> getU_name
+	> getPwd
+
+>> class Resturant extends User // Singleton
+	> menu: Item_list
+	> is_main_user
+	> set_resturant(String u_name, String pwd, Item_list menu) // To be set only by DBA
+	> get_resturant(): Resturant
+	> add_item() // refers to menu's funcs
+	> rem_item() // refers to menu's funcs
+	> get_menu(): Item_list // refer's to menu's func
+	
+>> class Customer extends User // Singleton
+	> set_customer(String u_name, String pwd, int wallet)
+	> wallet
+	> get_wallet()
+	> set_wallet(int amt)
+
+>> class Order_builder:
+	> order:Order
+	> add_item(Item item)
+	> rem_item(Item item)
+	> place_order(): Order // Does all the checking
+
+>> class Order
+	> status: int (or enum)
+		> 1: being placed // Initial: When customer is creating the order
+		> 2: cooking // Resturant updated
+		> 3: Picked up // Delivary guy updated
+		> 4: Delivered //Delivary guy updated
+
+	> cart // type: Item_list
+	> net_cost: int
+	> add_item(Item item) // refers to item_list's funcs
+	> rem_item(Item item) // refers to item_list's funcs
+	> get_status(): oStatus // an enum
+	> get_cost()
+	> update_status(WHO who, bool isPass) // who: resturant or delivary guy (REST, DELI). isPass: whether "who" made order "pass" to next state or failed. If failed, raises an exception
+
+>> class Item_list
+	> add_item(String name, int cost)
+	> rem_item(String name)
+	> get_items(): Item[]
+	> getItemCost(String name)
+	// getCost isn't implemented as menu dosen't need this functionality
+>> class Item
+	> name: String
+	> cost: int
+	> getName()
+	> getCost()
+
+>> class DBA // database access, contains only static methods
+	> create_user(u_name, pwd, type): User
+	> load_user(u_name, pwd, type): User
+	> get_resturants(): String[]
+	> save(): void // Saves the model state into the database
