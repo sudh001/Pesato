@@ -244,6 +244,7 @@ public class place_order extends javax.swing.JFrame {
         {
             
             cltr.place();
+            cltr.order_update_wizard(WHO.CUST , true);
             this.dispose();
         }
         catch(Exception e)

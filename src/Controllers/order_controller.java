@@ -65,6 +65,9 @@ public class order_controller {
             order = obd.place();
         else
             throw new Exception("order already placed");
+        
+        
+        
           
     }
     public String get_status()
@@ -82,18 +85,61 @@ public class order_controller {
         }
         return "";
     }
-    public void update_status(WHO who, boolean isPass)
+    public void update_status(WHO who, boolean isPass) throws Exception
     {
-        try
+        
+        if(order != null)
+            order.update_status(who, isPass);
+        else
+            throw new Exception("order dosen't exist");
+        JOptionPane.showMessageDialog(null, "Your order status is: " + order.get_status());
+        
+            
+    }
+    
+    public void order_update_wizard(WHO who, boolean isPass)
+    {
+       
+        if(who == WHO.CUST)
         {
-            if(order != null)
-                order.update_status(who, isPass);
-            else
-                throw new Exception("order dosen't exist");
+            JOptionPane.showMessageDialog(null, "Your order is being cooked");
+            // Sending request to Resturant
+            Order_update_rest rst = new Order_update_rest(this);
+            rst.setVisible(true);
+            
         }
-        catch (Exception e)
+        else if(who == WHO.REST)
         {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            try
+            {
+                update_status(who, isPass);
+                
+                order_update_deli deli = new order_update_deli(this);
+                deli.setVisible(true);
+                
+            }
+            catch (Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e.getMessage() + "\n Please re-make your order");
+                choose_resturants chr = new choose_resturants();
+                chr.setVisible(true);
+              
+            }
+            
+        }
+        else if(who == WHO.DELI)
+        {
+            try
+            {
+                update_status(who, isPass);
+            }
+            catch (Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e.getMessage() + "\n Please re-make your order");
+                choose_resturants chr = new choose_resturants();
+                chr.setVisible(true);
+              
+            }
         }
     }
    
