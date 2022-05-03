@@ -4,6 +4,7 @@
  */
 package Views;
 import Controllers.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +22,7 @@ public class choose_resturants extends javax.swing.JFrame {
     }
     public void setResturants()
     {
-        String[] rests = cltr.get_resturants();
+        ArrayList<String> rests = cltr.get_resturants();
         String rest_str = "";
         for(String rest: rests)
             rest_str += rest + "\n";

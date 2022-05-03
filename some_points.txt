@@ -3,14 +3,14 @@
 
 Views:
 >> login/reg (for both resturant and customer)
->> customer_home : balence, add money
->> resturant_home : menu, edit menu
->> choose_resturant
->> place_order
->> track_order
+>> customer-home : balence, add money
+>> resturant-home : menu, edit menu
+>> choose-resturant
+>> place-order
+>> track-order
 >> Update-order
->> Resturant_upadate extends Update-order
->> Delivary_update extends Update-order
+>> Resturant-upadate extends Update-order
+>> Delivary-update extends Update-order
 
 
 

@@ -39,7 +39,7 @@ public class Customer extends User{
     {
         return wallet;
     }
-    public void set_wallet(int amt)
+    public void set_wallet(int amt) throws Exception
     {
         wallet = amt;
         DBA.save();

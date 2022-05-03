@@ -152,8 +152,8 @@ public class login_reg extends javax.swing.JFrame {
                 if(who == WHO.CUST)
                     System.out.println("customer login succesfull");
                 else
-                    System.out.println("Resturant login succesfull");
-                this.dispose();
+                    System.out.println("Restaurent login succesfull");
+//                this.dispose();
             }
             catch(Exception e)
             {

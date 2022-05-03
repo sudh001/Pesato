@@ -16,7 +16,7 @@ import java.io.*;
 public class order_controller {
     private Order order;
     private OrderBuilder obd = new OrderBuilder();
-    public String[] get_resturants()
+    public ArrayList<String> get_resturants()
     {
         return DBA.get_resturants();
     }
